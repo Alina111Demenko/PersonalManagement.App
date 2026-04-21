@@ -234,6 +234,8 @@ public class Main {
         label.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         return label;
 
+
+
     }
 
     static JButton styledButton(String text){
