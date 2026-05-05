@@ -57,6 +57,8 @@ public class Main {
         JButton bAbteilung = styledButton("Abteilung einfügen");
         JButton bAbteilungLoschen = styledButton("Abteilung löschen");
         JButton bLoschen= styledButton("Mitarbeiterdaten löschen");
+        JButton bSave = styledButton("Save");
+        JButton bLoad = styledButton("Load");
 
         c.gridx = 0; c.gridy = 0;
         inputPanel.add(styledLabel("Vorname:"),c);
@@ -76,6 +78,11 @@ public class Main {
         inputPanel.add(styledLabel("Geburtstag:"), c);
         c.gridx = 1;
         inputPanel.add(tfGeburtstag, c);
+        c.gridx = 2;
+        inputPanel.add(bSave, c);
+        c.gridx = 3;
+        inputPanel.add(bLoad, c);
+
 
         c.gridx = 0; c.gridy = 3;
         inputPanel.add(styledLabel("Abteilung:"), c);
@@ -162,6 +169,25 @@ public class Main {
             model.addRow(new Object[]{vorname, nachname, geburtstag, abtName, telefon, email});
 
         });
+        bLoad.addActionListener(e -> {
+            Unternehmen geladen = DataManager.load();
+            if (geladen == null) {
+                JOptionPane.showMessageDialog(frame, "Keine Daten gefunden.");
+                return;
+            }
+
+            // myCompany обновляем
+            myCompany.abteilungs = geladen.abteilungs;
+
+            // таблицу очищаем и заново заполняем
+            model.setRowCount(0);
+            for (Abteilung a : myCompany.abteilungs) {
+                for (Person p : a.personList) {
+                    model.addRow(new Object[]{p.vorname, p.nachname, p.geburtstag, a.name, p.telefon, p.email});
+                }
+            }
+            JOptionPane.showMessageDialog(frame, "Geladen!");
+        });
 
         bAbteilung.addActionListener(e -> {
             String neuerName = JOptionPane.showInputDialog(frame, "Name der neuen Abteilung:");
@@ -201,6 +227,11 @@ public class Main {
             if(model.getRowCount() == 0){
                 JOptionPane.showMessageDialog(frame, "Niemand gefunden.");
             }
+        });
+
+        bSave.addActionListener(e -> {
+            DataManager.save(myCompany);
+            JOptionPane.showMessageDialog(frame, "Gespeichert!");
         });
 
         bLoschen.addActionListener(e -> {
