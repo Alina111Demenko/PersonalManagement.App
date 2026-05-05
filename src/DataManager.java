@@ -11,7 +11,7 @@ public class DataManager {
     public static void save(Unternehmen unternehmen){
        try(Writer writer = new FileWriter(FILE_NAME)){
            gson.toJson(unternehmen, writer);
-           System.out.println("Saved");
+           System.out.println("Saved"); //save
        }
        catch(IOException e){
            System.out.println("Fehler beim Speichern" + e.getMessage());
