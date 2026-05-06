@@ -3,16 +3,18 @@ import com.google.gson.GsonBuilder;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.List;
+import java.io.File;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-
         /*Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(myCompany);
         System.out.println(json);*/
 
         //Fenster
-        Unternehmen myCompany = new Unternehmen("MK");
+        Unternehmen myCompany = DataManager.load();
         JFrame frame = new JFrame("Personalmanagement");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800,900);
@@ -87,13 +89,13 @@ public class Main {
         c.gridx = 0; c.gridy = 3;
         inputPanel.add(styledLabel("Abteilung:"), c);
         c.gridx = 1;
-        String[] abteilungen = {"Software", "IT", "Marketing", "HR", "Sales"};
-        JComboBox<String> combo = new JComboBox<>(abteilungen);
+        JComboBox<String> combo = new JComboBox<>();
+        for(Abteilung a: myCompany.abteilungs){
+            combo.addItem(a.name);
 
-        for(String name : abteilungen){
-            myCompany.AbteilungEinfugen(new Abteilung(name));
 
         }
+
         combo.setBackground(new Color(33,33,33));
         combo.setForeground(new Color(230,230,230));
         combo.setFont(new Font("Segoe UI", Font.PLAIN, 13));
@@ -169,26 +171,6 @@ public class Main {
             model.addRow(new Object[]{vorname, nachname, geburtstag, abtName, telefon, email});
 
         });
-        bLoad.addActionListener(e -> {
-            Unternehmen geladen = DataManager.load();
-            if (geladen == null) {
-                JOptionPane.showMessageDialog(frame, "Keine Daten gefunden.");
-                return;
-            }
-
-            // myCompany обновляем
-            myCompany.abteilungs = geladen.abteilungs;
-
-            // таблицу очищаем и заново заполняем
-            model.setRowCount(0);
-            for (Abteilung a : myCompany.abteilungs) {
-                for (Person p : a.personList) {
-                    model.addRow(new Object[]{p.vorname, p.nachname, p.geburtstag, a.name, p.telefon, p.email});
-                }
-            }
-            JOptionPane.showMessageDialog(frame, "Geladen!");
-        });
-
         bAbteilung.addActionListener(e -> {
             String neuerName = JOptionPane.showInputDialog(frame, "Name der neuen Abteilung:");
             if(neuerName != null && !neuerName.trim().isEmpty()){

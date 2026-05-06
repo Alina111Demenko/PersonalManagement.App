@@ -2,31 +2,19 @@
   "name": "MK",
   "abteilungs": [
     {
-      "name": "Software",
+      "name": "IT",
       "personList": [
         {
-          "nachname": "1",
-          "vorname": "1",
-          "geburtstag": "11",
-          "telefon": "1",
-          "email": "1"
+          "nachname": "123",
+          "vorname": "123",
+          "geburtstag": "",
+          "telefon": "",
+          "email": ""
         }
       ]
     },
     {
-      "name": "IT",
-      "personList": []
-    },
-    {
-      "name": "Marketing",
-      "personList": []
-    },
-    {
-      "name": "HR",
-      "personList": []
-    },
-    {
-      "name": "Sales",
+      "name": "Software",
       "personList": []
     }
   ]

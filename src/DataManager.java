@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.*;
 public class DataManager {
-    private static final String FILE_NAME = "data.json";
+    private static final String FILE_NAME = "D:\\New_Java_Project\\data.json";
     //object Gson
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
