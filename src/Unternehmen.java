@@ -22,17 +22,4 @@ public class Unternehmen{
         }
         return null;
     }
-
-//    public void Suchen() {
-//        String VornameTextBox = "";
-//
-//        if (VornameTextBox != "") {
-//            for (Abteilung a : abteilungs) {
-//                for (Person p : a.personList)
-//                    if (p.vorname.equals(name)) return p;
-//            }
-//
-//        }
-//    }
-
 }

@@ -1,20 +1,13 @@
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.List;
-import java.io.File;
-import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        /*Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json = gson.toJson(myCompany);
-        System.out.println(json);*/
+
+        Unternehmen myCompany = DataManager.load();
 
         //Fenster
-        Unternehmen myCompany = DataManager.load();
         JFrame frame = new JFrame("Personalmanagement");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800,900);
@@ -34,7 +27,6 @@ public class Main {
         JPanel inputPanel = new JPanel(new GridBagLayout());
         inputPanel.setBackground(new Color(33,33,33));
         inputPanel.setBorder(BorderFactory.createLineBorder(new Color(187,134,252), 1));
-        BorderFactory.createEmptyBorder(15,15,15,15);
         GridBagConstraints c = new GridBagConstraints();
         c.insets = new Insets(5,5,5,5);
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -59,8 +51,8 @@ public class Main {
         JButton bAbteilung = styledButton("Abteilung einfügen");
         JButton bAbteilungLoschen = styledButton("Abteilung löschen");
         JButton bLoschen= styledButton("Mitarbeiterdaten löschen");
-        JButton bSave = styledButton("Save");
-        JButton bLoad = styledButton("Load");
+        JButton bSave = styledButton("Speichern");
+        JButton bUbersicht = styledButton("Übersicht");
 
         c.gridx = 0; c.gridy = 0;
         inputPanel.add(styledLabel("Vorname:"),c);
@@ -83,8 +75,7 @@ public class Main {
         c.gridx = 2;
         inputPanel.add(bSave, c);
         c.gridx = 3;
-        inputPanel.add(bLoad, c);
-
+        inputPanel.add(bUbersicht, c);
 
         c.gridx = 0; c.gridy = 3;
         inputPanel.add(styledLabel("Abteilung:"), c);
@@ -92,15 +83,12 @@ public class Main {
         JComboBox<String> combo = new JComboBox<>();
         for(Abteilung a: myCompany.abteilungs){
             combo.addItem(a.name);
-
-
         }
 
         combo.setBackground(new Color(33,33,33));
         combo.setForeground(new Color(230,230,230));
         combo.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         inputPanel.add(combo, c);
-
 
         c.gridx = 2;
         inputPanel.add(bAbteilung,c);
@@ -128,7 +116,7 @@ public class Main {
         //tabelle
         String[] columns = {"Vorname", "Nachname", "Geburtstag", "Abteilung", "Telefonnummer", "E-Mail"};
         DefaultTableModel model = new DefaultTableModel(columns, 0);
-        model.addRow(new Object[]{"Vorname", "Name", "01.01.2000", "IT", "123", "name@test"});
+        //model.addRow(new Object[]{"Vorname", "Name", "01.01.2000", "IT", "123", "name@test"});
         JTable table = new JTable(model);
         table.setBackground(new Color(33, 33, 33));
         table.setForeground(new Color(220, 220, 220));
@@ -140,8 +128,6 @@ public class Main {
         table.getTableHeader().setForeground(new Color(24, 24, 24));
         table.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 13));
 
-
-
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.getViewport().setBackground(new Color(33, 33, 33));
         scrollPane.setBorder(BorderFactory.createLineBorder(new Color(187, 134, 252), 1));
@@ -151,7 +137,14 @@ public class Main {
         gbc.fill = GridBagConstraints.BOTH;
         mainPanel.add(scrollPane, gbc);
 
-        //nehmen alle daten und hibzufugen zu Person(Mitarbeiter)
+        //schreiben daten in tabelle(mit start)
+        for(Abteilung a : myCompany.abteilungs){
+            for(Person p : a.personList){
+                model.addRow(new Object[]{p.vorname, p.nachname, p.geburtstag, a.name, p.telefon, p.email});
+            }
+        }
+
+        //nehmen alle daten und hinfugen zu Person(Mitarbeiter)
         bEintragen.addActionListener(e -> {
             String vorname = tfVorname.getText().trim();
             String nachname = tfNachname.getText().trim();
@@ -216,19 +209,27 @@ public class Main {
             JOptionPane.showMessageDialog(frame, "Gespeichert!");
         });
 
+        // Alle Mitarbeiter anzeigen(setzt den Suchfilter zurück)
+
+        bUbersicht.addActionListener(e -> {
+            model.setRowCount(0);
+            for (Abteilung a : myCompany.abteilungs) {
+                for (Person p : a.personList) {
+                    model.addRow(new Object[]{p.vorname, p.nachname, p.geburtstag, a.name, p.telefon, p.email});
+                }
+            }
+        });
+
         bLoschen.addActionListener(e -> {
             String email = tfEmail.getText().trim();
             if(email.isEmpty()){
                 JOptionPane.showMessageDialog(frame, "Email eingeben zum Löschen." );
                 return;
             }
-            
 
             for(Abteilung a : myCompany.abteilungs){
                 a.PersonLochen(email);
             }
-
-
             for(int i = model.getRowCount() -1; i >= 0; i--){
                 if(model.getValueAt(i, 5).equals(email)){
                     model.removeRow(i);
@@ -246,9 +247,6 @@ public class Main {
         label.setForeground(new Color(150,150,150));
         label.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         return label;
-
-
-
     }
 
     static JButton styledButton(String text){

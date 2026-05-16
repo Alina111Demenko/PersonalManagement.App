@@ -12,5 +12,4 @@ public class Person {
         this.telefon =telefon;
         this.email = email;
     }
-
 }
