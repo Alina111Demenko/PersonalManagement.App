@@ -10,18 +10,34 @@
           "geburtstag": "",
           "telefon": "",
           "email": ""
-        },
-        {
-          "nachname": "derde23",
-          "vorname": "kjkfr",
-          "geburtstag": "23.23.232",
-          "telefon": "3243",
-          "email": "3434"
         }
       ]
     },
     {
       "name": "Software",
+      "personList": [
+        {
+          "nachname": "jin",
+          "vorname": "wanyu",
+          "geburtstag": "05.08.2001",
+          "telefon": "1777",
+          "email": "666"
+        },
+        {
+          "nachname": "jin",
+          "vorname": "lina",
+          "geburtstag": "05.08.2002",
+          "telefon": "177733",
+          "email": "66611"
+        }
+      ]
+    },
+    {
+      "name": "HR",
+      "personList": []
+    },
+    {
+      "name": "test",
       "personList": []
     }
   ]
