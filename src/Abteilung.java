@@ -9,7 +9,7 @@ public class Abteilung {
         this.name=name;
     }
 
-    public void Personeinfugen(Person person) {
+    public void personeinfugen(Person person) {
         //prüfen ob man schon in list ist(mit email).
         boolean exists = personList.stream().anyMatch(p -> p.email.equals(person.email));
         if(!exists){
@@ -17,7 +17,7 @@ public class Abteilung {
         }
     }
     //Löschen Person, wenn Vorname gleich wie Valiable
-    public void PersonLochen(String email){
+    public void personLoschen(String email){
         personList.removeIf(p -> p.email.equals((email)));
     }
 }

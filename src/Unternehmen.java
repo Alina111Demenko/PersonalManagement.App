@@ -4,15 +4,15 @@ import java.util.List;
 public class Unternehmen{
     String name;
     List<Abteilung> abteilungs = new ArrayList<>();
-    public  Unternehmen(String name){
+    public Unternehmen(String name){
         this.name=name;
     }
 
-    public  void AbteilungEinfugen(Abteilung abteilung){
+    public void abteilungEinfugen(Abteilung abteilung){
 
         abteilungs.add(abteilung);
     }
-    public void  AbteilungLochen(String inputAbteilungname){
+    public void abteilungLoschen(String inputAbteilungname){
         abteilungs.removeIf(a->a.name.equals(inputAbteilungname));
     }
 

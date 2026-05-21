@@ -153,21 +153,21 @@ public class Main {
             String email = tfEmail.getText().trim();
             String abtName = (String)combo.getSelectedItem();
 
-            if(vorname.isEmpty() || nachname.isEmpty()){
-                JOptionPane.showMessageDialog(frame, "Vorname und Nachname sind Pflichtfelder.");
+            if(vorname.isEmpty() || nachname.isEmpty() || geburtstag.isEmpty() || telefon.isEmpty() || email.isEmpty()){
+                JOptionPane.showMessageDialog(frame, "Alle Felder sind Pflichtfelder.");
                 return;
             }
 
             Person p = new Person(nachname, vorname, geburtstag, telefon, email);
             Abteilung abt = myCompany.getAbteilung(abtName);
-            abt.Personeinfugen(p);
+            abt.personeinfugen(p);
             model.addRow(new Object[]{vorname, nachname, geburtstag, abtName, telefon, email});
 
         });
         bAbteilung.addActionListener(e -> {
             String neuerName = JOptionPane.showInputDialog(frame, "Name der neuen Abteilung:");
             if(neuerName != null && !neuerName.trim().isEmpty()){
-                myCompany.AbteilungEinfugen(new Abteilung(neuerName.trim()));
+                myCompany.abteilungEinfugen(new Abteilung(neuerName.trim()));
                 combo.addItem(neuerName.trim());
             }
         });
@@ -175,7 +175,7 @@ public class Main {
         bAbteilungLoschen.addActionListener(e -> {
             String abtName = (String)combo.getSelectedItem();
             if(abtName != null){
-                myCompany.AbteilungLochen(abtName);
+                myCompany.abteilungLoschen(abtName);
                 combo.removeItem(abtName);
                 for(int i =model.getRowCount() -1; i >= 0; i--){
                     if(model.getValueAt(i, 3).equals(abtName)){
@@ -228,7 +228,7 @@ public class Main {
             }
 
             for(Abteilung a : myCompany.abteilungs){
-                a.PersonLochen(email);
+                a.personLoschen(email);
             }
             for(int i = model.getRowCount() -1; i >= 0; i--){
                 if(model.getValueAt(i, 5).equals(email)){

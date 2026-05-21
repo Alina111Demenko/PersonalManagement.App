@@ -1,28 +1,48 @@
 {
-  "name": "MK",
+  "name": "Meine Firma",
   "abteilungs": [
     {
       "name": "IT",
       "personList": [
         {
-          "nachname": "123",
-          "vorname": "123",
-          "geburtstag": "",
-          "telefon": "",
-          "email": ""
-        },
-        {
-          "nachname": "derde23",
-          "vorname": "kjkfr",
-          "geburtstag": "23.23.232",
-          "telefon": "3243",
-          "email": "3434"
+          "nachname": "Berg",
+          "vorname": "Tom",
+          "geburtstag": "01/11/2001",
+          "telefon": "0483782",
+          "email": "tom@gmail.com"
         }
       ]
     },
     {
       "name": "Software",
-      "personList": []
+      "personList": [
+        {
+          "nachname": "Demenko",
+          "vorname": "Alina",
+          "geburtstag": "12/23/2004",
+          "telefon": "0847833",
+          "email": "alina@gmail.com"
+        },
+        {
+          "nachname": "Jin",
+          "vorname": "Wanyu",
+          "geburtstag": "11/11/1999",
+          "telefon": "0327838",
+          "email": "jin@gmail.com"
+        }
+      ]
+    },
+    {
+      "name": "Marketing",
+      "personList": [
+        {
+          "nachname": "Konrad",
+          "vorname": "Anna",
+          "geburtstag": "01/11/1999",
+          "telefon": "0389999",
+          "email": "anna@gmail.com"
+        }
+      ]
     }
   ]
 }
